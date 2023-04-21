@@ -1,4 +1,5 @@
-import "./bootstrap";
+import "./config/bootstrap";
+import "font-awesome/css/font-awesome.css";
 
 import { createApp, h } from "vue";
 import { createInertiaApp } from "@inertiajs/inertia-vue3";
@@ -6,6 +7,8 @@ import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 
 import Toast, { useToast } from "vue-toastification";
 import "vue-toastification/dist/index.css";
+
+import store from "./config/store";
 
 import "../css/app.css";
 
@@ -18,9 +21,11 @@ createInertiaApp({
     setup({ el, App, props, plugin }) {
         createApp({ render: () => h(App, props) })
             .use(plugin)
+            .mixin({ methods: { route } })
             .mixin({ data: () => ({ toast: useToast() }) })
             .use(useToast)
             .use(Toast)
+            .use(store)
             .mount(el);
     },
 });

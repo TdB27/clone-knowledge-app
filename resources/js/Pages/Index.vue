@@ -1,7 +1,19 @@
 <template>
-    <div><h1>Logado</h1></div>
+    <div>
+        <Layout>
+            <h1>Logado</h1>
+        </Layout>
+    </div>
 </template>
 
 <script>
-export default {};
+import Layout from "../layouts/Layout.vue";
+
+export default {
+    components: { Layout },
+    props: { user: Object },
+    mounted() {
+        this.$store.commit("insertUser", this.user);
+    },
+};
 </script>

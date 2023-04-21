@@ -32,4 +32,15 @@ class AuthController extends Controller
             'credenciais' => 'Credenciais incorretas! Por favor, verifique suas credenciais e tente novamente',
         ]);
     }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/');
+    }
 }

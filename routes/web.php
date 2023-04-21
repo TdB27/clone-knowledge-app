@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::controller(AuthController::class)->group(function () {
     Route::get('/', 'index')->name('login');
     Route::post('/authenticate', 'authenticate')->name('authenticate');
+    Route::get('/logout', 'logout')->name('logout');
 });
 Route::post('user/store', [\App\Http\Controllers\Api\UserController::class, 'store'])->name('web.user.store');
 

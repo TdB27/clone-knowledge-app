@@ -10,6 +10,12 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Index');
+        $user = [
+            'name' => auth()->user()->name,
+            'email' => auth()->user()->email,
+            'admin' => auth()->user()->admin == 1 ? true : false,
+        ];
+
+        return Inertia::render('Index', ['user' => $user]);
     }
 }
