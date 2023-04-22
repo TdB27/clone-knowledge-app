@@ -9,6 +9,7 @@ import Toast, { useToast } from "vue-toastification";
 import "vue-toastification/dist/index.css";
 
 import store from "./config/store";
+import { vuetify } from "./config/vuetify";
 
 import "../css/app.css";
 
@@ -26,6 +27,7 @@ createInertiaApp({
             .use(useToast)
             .use(Toast)
             .use(store)
+            .use(vuetify)
             .mount(el);
     },
 });
