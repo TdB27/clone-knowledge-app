@@ -12,7 +12,9 @@
                         <v-tabs v-model="tab">
                             <v-tab value="articles"> Artigos </v-tab>
                             <v-tab value="categories"> Categorias </v-tab>
-                            <v-tab value="users"> Usuários </v-tab>
+                            <v-tab value="users" @click="getUsers">
+                                Usuários
+                            </v-tab>
                         </v-tabs>
                         <v-card-text>
                             <v-window v-model="tab">
@@ -23,8 +25,7 @@
                                     categories
                                 </v-window-item>
                                 <v-window-item value="users">
-                                    <!-- <UserAdmin /> -->
-                                    users
+                                    <Users :users="users" />
                                 </v-window-item>
                             </v-window>
                         </v-card-text>
@@ -38,13 +39,46 @@
 <script>
 import Layout from "@/layouts/Layout.vue";
 import PageTitle from "@/layouts/PageTitle.vue";
+import { Inertia } from "@inertiajs/inertia";
+import Users from "./User.vue";
 
 export default {
-    components: { Layout, PageTitle },
+    name: "IndexAdmin",
+    components: { Layout, PageTitle, Users },
+    props: { data: Object, title: String },
     data() {
         return {
-            tab: "Articles",
+            tab: this.title,
+            users: {},
         };
+    },
+    watch: {
+        tab(value) {
+            this.verifyTab(value);
+        },
+    },
+    mounted() {
+        this.verifyTab(this.tab);
+    },
+    methods: {
+        getUsers() {
+            let vm = this;
+            Inertia.get(
+                route("admin.user"),
+                {},
+                {
+                    preserveState: true,
+                    onSuccess(res) {
+                        vm.users = res.props.data;
+                    },
+                }
+            );
+        },
+        verifyTab(value = null) {
+            if (value == "articles") console.log("articles");
+            else if (value == "categories") console.log("categories");
+            else this.users = this.data;
+        },
     },
 };
 </script>

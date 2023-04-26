@@ -5,9 +5,9 @@
             <i class="fa fa-angle-down"></i>
         </div>
         <div class="user-dropdown-content">
-            <a href="./admin" v-if="user.admin">
+            <Link :href="route('admin')" v-if="user.admin">
                 <i class="fa fa-cogs"></i> Administração
-            </a>
+            </Link>
             <Link class="title" :href="route('logout')">
                 <i class="fa fa-sign-out"></i> Sair
             </Link>

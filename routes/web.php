@@ -32,7 +32,10 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware('admin')->prefix('admin')->group(function () {
         Route::controller(AdminController::class)->group(function () {
-            Route::get('/', 'index')->name('admin');
+            Route::get('/', 'articles')->name('admin');
+            Route::get('/articles', 'articles')->name('admin.articles');
+            Route::get('/categories', 'categories')->name('admin.categories');
+            Route::get('/users', 'users')->name('admin.user');
         });
     });
 });
