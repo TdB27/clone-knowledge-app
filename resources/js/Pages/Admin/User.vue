@@ -65,6 +65,7 @@
                         variant="tonal"
                         v-if="mode === 'remove'"
                         color="error"
+                        @click="destroy"
                     >
                         Excluir
                     </v-btn>
@@ -108,6 +109,7 @@
 
 <script>
 import Table from "@/components/Table.vue";
+import { Inertia } from "@inertiajs/inertia";
 
 export default {
     name: "UserAdmin",
@@ -122,9 +124,42 @@ export default {
         };
     },
     methods: {
-        reset() {},
-        save() {},
-        loadUser() {},
+        reset() {
+            console.log("entrou aqui");
+            this.user = {};
+            this.mode = "save";
+        },
+        save() {
+            const method = this.user.id ? "put" : "post";
+            const url = this.user.id
+                ? route("admin.user.update", [this.user.id])
+                : route("admin.user.store");
+
+            const vm = this;
+            Inertia[method](url, this.user, {
+                onSuccess() {
+                    vm.reset();
+                },
+            });
+        },
+        destroy() {
+            const vm = this;
+
+            Inertia.delete(route("admin.user.destroy", [this.user.id]), {
+                onSuccess() {
+                    if (vm.users.data.length == 0) {
+                        window.location = route("admin.user");
+                    }
+                    vm.reset();
+                },
+            });
+        },
+        loadUser(user, mode = "save") {
+            user.admin = user.admin == 1 ? true : false;
+
+            this.user = { ...user };
+            this.mode = mode;
+        },
     },
 };
 </script>

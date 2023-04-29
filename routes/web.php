@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Views\AdminController;
 use App\Http\Controllers\Views\HomeController;
@@ -21,7 +22,7 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/authenticate', 'authenticate')->name('authenticate');
     Route::get('/logout', 'logout')->name('logout');
 });
-Route::post('user/store', [\App\Http\Controllers\Api\UserController::class, 'store'])->name('web.user.store');
+Route::post('user/store', [UserController::class, 'store'])->name('user.store');
 
 // Rotas acessadas apenas por usuário autenticado
 Route::middleware('auth')->group(function () {
@@ -36,6 +37,12 @@ Route::middleware('auth')->group(function () {
             Route::get('/articles', 'articles')->name('admin.articles');
             Route::get('/categories', 'categories')->name('admin.categories');
             Route::get('/users', 'users')->name('admin.user');
+        });
+
+        Route::controller(UserController::class)->prefix('users')->group(function () {
+            Route::post('/store', 'store')->name('admin.user.store');
+            Route::put('/update/{user}', 'update')->name('admin.user.update');
+            Route::delete('/destroy/{user}', 'destroy')->name('admin.user.destroy');
         });
     });
 });

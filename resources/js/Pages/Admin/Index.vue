@@ -50,12 +50,10 @@ export default {
         return {
             tab: this.title,
             users: {},
+            toast_options: {
+                duration: 5000,
+            },
         };
-    },
-    watch: {
-        tab(value) {
-            this.verifyTab(value);
-        },
     },
     mounted() {
         this.verifyTab(this.tab);
@@ -78,6 +76,41 @@ export default {
             if (value == "articles") console.log("articles");
             else if (value == "categories") console.log("categories");
             else this.users = this.data;
+        },
+    },
+    watch: {
+        tab(value) {
+            this.verifyTab(value);
+        },
+        data: {
+            handler() {
+                this.verifyTab(this.tab);
+            },
+            deep: true,
+            immediate: true,
+        },
+        "$page.props.errors": {
+            handler(errors) {
+                this.toast.clear();
+                this.$nextTick(() => {
+                    Object.values(errors).forEach((error, i) => {
+                        this.toast.error(error, this.toast_options);
+                    });
+                });
+            },
+            deep: true,
+            immediate: true,
+        },
+        "$page.props.flash.message": {
+            handler(message) {
+                if (message) {
+                    this.$nextTick(() => {
+                        this.toast[message.type](message.text, {});
+                    });
+                }
+            },
+            deep: true,
+            immediate: true,
         },
     },
 };

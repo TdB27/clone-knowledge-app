@@ -29,4 +29,35 @@ class UserController extends Controller
             'text' => "Salvo com sucesso",
         ]);
     }
+
+    public function update(UserRequest $request, User $user)
+    {
+        $data = $request->all();
+
+        if (isset($data['password'])) {
+            $data['password'] = Hash::make($user['password']);
+            unset($data['confirmPassword']);
+        }
+
+        $user->update($data);
+
+        return Redirect::back()->with('message', [
+            'type' => 'success',
+            'text' => "Salvo com sucesso",
+        ]);
+    }
+
+    public function destroy($user)
+    {
+        $user = User::find($user);
+
+        if ($user === null)
+            return Redirect::back()->withErrors(["Erro ao remover o usuário!"]);
+
+        $user->delete();
+        return Redirect::back()->with('message', [
+            'type' => 'success',
+            'text' => "Removido com sucesso",
+        ]);
+    }
 }
