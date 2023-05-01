@@ -8,6 +8,7 @@
                         label="Nome"
                         v-model="user.name"
                         required
+                        :disabled="mode === 'remove'"
                         variant="solo"
                         placeholder="Informe o Nome do Usuário..."
                     ></v-text-field>
@@ -17,6 +18,7 @@
                         v-model="user.email"
                         label="Email"
                         required
+                        :disabled="mode === 'remove'"
                         variant="solo"
                         placeholder="Informe o Email do Usuário..."
                     ></v-text-field>

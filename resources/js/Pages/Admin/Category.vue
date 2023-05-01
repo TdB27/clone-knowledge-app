@@ -7,6 +7,7 @@
                     label="Nome da Categoria"
                     v-model="category.name"
                     required
+                    :disabled="mode === 'remove'"
                     variant="solo"
                     placeholder="Informe o Nome da Categoria..."
                 ></v-text-field>
@@ -17,6 +18,7 @@
                     :items="categoriesWithPath"
                     item-title="path"
                     item-value="id"
+                    :disabled="mode === 'remove'"
                     label="Categoria Pai"
                 ></v-select>
             </v-col>

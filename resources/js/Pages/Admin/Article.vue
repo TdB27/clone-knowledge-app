@@ -8,6 +8,7 @@
                     v-model="article.name"
                     required
                     variant="solo"
+                    :disabled="mode === 'remove'"
                     placeholder="Informe o Nome do Artigo..."
                 ></v-text-field>
             </v-col>
@@ -17,6 +18,7 @@
                     v-model="article.description"
                     required
                     variant="solo"
+                    :disabled="mode === 'remove'"
                     placeholder="Informe a Descrição do Artigo..."
                 ></v-text-field>
             </v-col>
@@ -26,6 +28,7 @@
                     v-model="article.img_url"
                     required
                     variant="solo"
+                    :disabled="mode === 'remove'"
                     placeholder="Informe a URL da Imagem..."
                 ></v-text-field>
             </v-col>
@@ -36,6 +39,7 @@
                     item-title="path"
                     item-value="id"
                     label="Categoria do Artigo"
+                    :disabled="mode === 'remove'"
                 ></v-select>
             </v-col>
             <v-col>
@@ -45,6 +49,7 @@
                     item-title="name"
                     item-value="id"
                     label="Autor do Artigo"
+                    :disabled="mode === 'remove'"
                 ></v-select>
             </v-col>
             <v-col>
