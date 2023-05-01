@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Views\AdminController;
+use App\Http\Controllers\Views\ArticlesController;
 use App\Http\Controllers\Views\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -60,5 +61,9 @@ Route::middleware('auth')->group(function () {
             Route::put('/update/{article}', 'update')->name('admin.article.update');
             Route::delete('/destroy/{article}', 'destroy')->name('admin.article.destroy');
         });
+    });
+
+    Route::controller(ArticlesController::class)->group(function () {
+        Route::get('/categories/{article}/articles', 'getByCategories')->name('admin.article.get-by-categories');
     });
 });
