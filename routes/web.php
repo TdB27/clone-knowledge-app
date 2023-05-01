@@ -47,6 +47,7 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::controller(CategoryController::class)->prefix('categories')->group(function () {
+            Route::get('/get-all', 'index')->name('admin.category.get-all');
             Route::post('/store', 'store')->name('admin.category.store');
             Route::put('/update/{category}', 'update')->name('admin.category.update');
             Route::delete('/destroy/{category}', 'destroy')->name('admin.category.destroy');

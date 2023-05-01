@@ -14,7 +14,7 @@
             <v-col>
                 <v-select
                     v-model="category.parent_id"
-                    :items="categories.allCategories"
+                    :items="categoriesWithPath"
                     item-title="path"
                     item-value="id"
                     label="Categoria Pai"
@@ -47,9 +47,9 @@
         <hr />
         <Table
             :columns="['Código', 'Nome', 'Caminho', 'Ações']"
-            :pagination_data="categories.categories"
+            :pagination_data="categories"
         >
-            <tr v-for="i in categories.categories.data" :key="i.id">
+            <tr v-for="i in categories.data" :key="i.id">
                 <td>{{ i.id }}</td>
                 <td>{{ i.name }}</td>
                 <td>{{ i.path }}</td>
@@ -78,6 +78,8 @@
 <script>
 import Table from "@/components/Table.vue";
 import { Inertia } from "@inertiajs/inertia";
+import axios from "axios";
+import { categoriesWithPath } from "@/config/global";
 
 export default {
     name: "categoryAdmin",
@@ -89,19 +91,22 @@ export default {
         return {
             mode: "save",
             category: {},
+            categoriesWithPath: [],
         };
     },
     updated() {
         this.reset();
-
-        this.categories.categories.data = this.categoriesWithPath(
-            this.categories.categories.data
-        );
-        this.categories.allCategories = this.categoriesWithPath(
-            this.categories.allCategories
-        );
+        this.categories.data = categoriesWithPath(this.categories.data);
+        this.loadCategories();
     },
     methods: {
+        loadCategories() {
+            axios.get(route("admin.category.get-all")).then((res) => {
+                this.categoriesWithPath = categoriesWithPath(
+                    res.data.categories
+                );
+            });
+        },
         reset() {
             this.category = {};
             this.mode = "save";
@@ -129,34 +134,6 @@ export default {
         loadCategory(category, mode = "save") {
             this.category = { ...category };
             this.mode = mode;
-        },
-        categoriesWithPath(categories) {
-            const getParent = (categories, parentId) => {
-                const parent = categories.filter(
-                    (parent) => parent.id === parentId
-                );
-                return parent.length ? parent[0] : null;
-            };
-
-            const categoriesWithPath = categories.map((category) => {
-                let path = category.name;
-                let parent = getParent(categories, category.parent_id);
-
-                while (parent) {
-                    path = `${parent.name} > ${path}`;
-                    parent = getParent(categories, parent.parent_id);
-                }
-
-                return { ...category, path };
-            });
-
-            categoriesWithPath.sort((a, b) => {
-                if (a.path < b.path) return -1;
-                if (a.path > b.path) return 1;
-                return 0;
-            });
-
-            return categoriesWithPath;
         },
     },
 };

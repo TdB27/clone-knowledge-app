@@ -18,8 +18,7 @@ class AdminController extends Controller
 
     public function categories()
     {
-        $categories['categories'] = Category::paginate(10);
-        $categories['allCategories'] = Category::get();
+        $categories = Category::paginate(10);
         return Inertia::render('Admin/Index', ['title' => 'categories', 'data' => $categories]);
     }
 
