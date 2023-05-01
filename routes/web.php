@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Views\AdminController;
@@ -35,7 +36,7 @@ Route::middleware('auth')->group(function () {
         Route::controller(AdminController::class)->group(function () {
             Route::get('/', 'articles')->name('admin');
             Route::get('/articles', 'articles')->name('admin.articles');
-            Route::get('/categories', 'categories')->name('admin.categories');
+            Route::get('/categories', 'categories')->name('admin.category');
             Route::get('/users', 'users')->name('admin.user');
         });
 
@@ -43,6 +44,12 @@ Route::middleware('auth')->group(function () {
             Route::post('/store', 'store')->name('admin.user.store');
             Route::put('/update/{user}', 'update')->name('admin.user.update');
             Route::delete('/destroy/{user}', 'destroy')->name('admin.user.destroy');
+        });
+
+        Route::controller(CategoryController::class)->prefix('categories')->group(function () {
+            Route::post('/store', 'store')->name('admin.category.store');
+            Route::put('/update/{category}', 'update')->name('admin.category.update');
+            Route::delete('/destroy/{category}', 'destroy')->name('admin.category.destroy');
         });
     });
 });

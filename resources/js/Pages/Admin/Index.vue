@@ -11,7 +11,9 @@
                     <v-card>
                         <v-tabs v-model="tab">
                             <v-tab value="articles"> Artigos </v-tab>
-                            <v-tab value="categories"> Categorias </v-tab>
+                            <v-tab value="categories" @click="getCategories">
+                                Categorias
+                            </v-tab>
                             <v-tab value="users" @click="getUsers">
                                 Usuários
                             </v-tab>
@@ -22,7 +24,7 @@
                                     articles
                                 </v-window-item>
                                 <v-window-item value="categories">
-                                    categories
+                                    <Category :categories="categories" />
                                 </v-window-item>
                                 <v-window-item value="users">
                                     <Users :users="users" />
@@ -41,15 +43,17 @@ import Layout from "@/layouts/Layout.vue";
 import PageTitle from "@/layouts/PageTitle.vue";
 import { Inertia } from "@inertiajs/inertia";
 import Users from "./User.vue";
+import Category from "./Category.vue";
 
 export default {
     name: "IndexAdmin",
-    components: { Layout, PageTitle, Users },
+    components: { Layout, PageTitle, Users, Category },
     props: { data: Object, title: String },
     data() {
         return {
             tab: this.title,
             users: {},
+            categories: {},
             toast_options: {
                 duration: 5000,
             },
@@ -72,16 +76,26 @@ export default {
                 }
             );
         },
+        getCategories() {
+            let vm = this;
+            Inertia.get(
+                route("admin.category"),
+                {},
+                {
+                    preserveState: true,
+                    onSuccess(res) {
+                        vm.categories = res.props.data;
+                    },
+                }
+            );
+        },
         verifyTab(value = null) {
             if (value == "articles") console.log("articles");
-            else if (value == "categories") console.log("categories");
+            else if (value == "categories") this.categories = this.data;
             else this.users = this.data;
         },
     },
     watch: {
-        tab(value) {
-            this.verifyTab(value);
-        },
         data: {
             handler() {
                 this.verifyTab(this.tab);

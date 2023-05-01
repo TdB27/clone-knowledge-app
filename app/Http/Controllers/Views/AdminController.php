@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Views;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -17,7 +18,8 @@ class AdminController extends Controller
 
     public function categories()
     {
-        $categories = User::paginate(3);
+        $categories['categories'] = Category::paginate(10);
+        $categories['allCategories'] = Category::get();
         return Inertia::render('Admin/Index', ['title' => 'categories', 'data' => $categories]);
     }
 
