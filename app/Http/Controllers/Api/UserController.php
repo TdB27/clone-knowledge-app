@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
+use App\Models\Article;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -59,6 +60,10 @@ class UserController extends Controller
 
         if ($user === null)
             return Redirect::back()->withErrors(["Erro ao remover o usuário!"]);
+
+        $article = Article::where('user_id', $user->id)->first();
+        if ($article !== null)
+            return Redirect::back()->withErrors(["Usuário possui artigos!"]);
 
         $user->delete();
         return Redirect::back()->with('message', [

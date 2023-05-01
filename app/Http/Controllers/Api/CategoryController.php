@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
+use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -46,6 +47,10 @@ class CategoryController extends Controller
         $subCategory = Category::where('parent_id', $category->id)->first();
         if ($subCategory !== null)
             return Redirect::back()->withErrors(["Categoria possui subcategorias!"]);
+
+        $article = Article::where('category_id', $category->id)->first();
+        if ($article !== null)
+            return Redirect::back()->withErrors(["Categoria possui artigos!"]);
 
         $category->delete();
 
