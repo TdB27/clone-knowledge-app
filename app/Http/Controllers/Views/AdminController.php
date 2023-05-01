@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Views;
 
 use App\Http\Controllers\Controller;
+use App\Models\Article;
 use App\Models\Category;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -12,7 +13,7 @@ class AdminController extends Controller
 {
     public function articles()
     {
-        $articles = User::paginate(3);
+        $articles = Article::paginate(3);
         return Inertia::render('Admin/Index', ['title' => 'articles', 'data' => $articles]);
     }
 

@@ -86,6 +86,7 @@ export default {
     components: { Table },
     props: {
         categories: Object,
+        tab: String,
     },
     data() {
         return {
@@ -95,9 +96,11 @@ export default {
         };
     },
     updated() {
-        this.reset();
-        this.categories.data = categoriesWithPath(this.categories.data);
-        this.loadCategories();
+        if (this.tab === "categories") {
+            this.reset();
+            this.categories.data = categoriesWithPath(this.categories.data);
+            this.loadCategories();
+        }
     },
     methods: {
         loadCategories() {

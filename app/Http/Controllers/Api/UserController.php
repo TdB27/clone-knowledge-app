@@ -12,6 +12,12 @@ use Inertia\Inertia;
 
 class UserController extends Controller
 {
+    public function index()
+    {
+        $users = User::get();
+        return response()->json(['users' => $users]);
+    }
+
     public function store(UserRequest $request)
     {
         $user = $request->all();
