@@ -144,29 +144,6 @@ export default {
             deep: true,
             immediate: true,
         },
-        "$page.props.errors": {
-            handler(errors) {
-                this.toast.clear();
-                this.$nextTick(() => {
-                    Object.values(errors).forEach((error, i) => {
-                        this.toast.error(error, this.toast_options);
-                    });
-                });
-            },
-            deep: true,
-            immediate: true,
-        },
-        "$page.props.flash.message": {
-            handler(message) {
-                if (message) {
-                    this.$nextTick(() => {
-                        this.toast[message.type](message.text, {});
-                    });
-                }
-            },
-            deep: true,
-            immediate: true,
-        },
     },
 };
 </script>

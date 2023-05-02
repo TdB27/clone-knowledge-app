@@ -64,6 +64,7 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::controller(ArticlesController::class)->group(function () {
-        Route::get('/categories/{article}/articles', 'getByCategories')->name('admin.article.get-by-categories');
+        Route::get('/categories/{category}/articles', 'getByCategories')->name('admin.article.get-by-categories');
+        Route::get('/articles/{article}', 'getByArticle')->name('admin.article.get-by-article');
     });
 });

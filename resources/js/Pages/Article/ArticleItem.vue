@@ -1,6 +1,6 @@
 <template>
     <div class="article-item">
-        <Link>
+        <Link :href="route('admin.article.get-by-article', [article.id])">
             <div class="article-item-image d-none d-sm-block">
                 <img
                     v-if="article.img_url"
