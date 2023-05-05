@@ -13,6 +13,9 @@ import { vuetify } from "./config/vuetify";
 
 import "../css/app.css";
 
+import { Vue3Mq } from "vue3-mq";
+import { breakpoints } from "./config/mq";
+
 createInertiaApp({
     resolve: (name) =>
         resolvePageComponent(
@@ -28,6 +31,7 @@ createInertiaApp({
             .use(Toast)
             .use(store)
             .use(vuetify)
+            .use(Vue3Mq, breakpoints)
             .mount(el);
     },
 });

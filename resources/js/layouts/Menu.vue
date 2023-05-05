@@ -14,6 +14,7 @@ import Tree from "./Tree.vue";
 export default {
     name: "MenuLayout",
     components: { Tree },
+    inject: ["mq"],
     data() {
         return {
             treeData: [],
@@ -24,6 +25,10 @@ export default {
     },
     mounted() {
         this.getTreeData();
+
+        if (this.mq.current === "xs" || this.mq.current === "sm") {
+            this.$store.commit("toggleMenu", false);
+        }
     },
     watch: {
         "$page.props.flash.message"() {
@@ -34,7 +39,6 @@ export default {
         getTreeData() {
             const url = route("categories.get-tree");
             axios.get(url).then((res) => {
-                console.log(this.mountTree(res.data.categories));
                 this.treeData = this.mountTree(res.data.categories);
             });
         },
