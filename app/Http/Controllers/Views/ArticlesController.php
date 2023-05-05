@@ -13,7 +13,13 @@ class ArticlesController extends Controller
     public function getByCategories($category)
     {
         $category = Category::find($category);
-        $articles = Article::with('user')->where('category_id', $category->id)->get();
+        $categories = Category::where('id', $category->id)->orWhere('parent_id', $category->id)->get()->toArray();
+
+        $categories_ids = array_map(function ($category) {
+            return $category['id'];
+        }, $categories);
+
+        $articles = Article::with('user')->whereIn('category_id', $categories_ids)->get();
 
         return Inertia::render('Article/ArticleByCategory', ['category' => $category, 'articles' => $articles]);
     }

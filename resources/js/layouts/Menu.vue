@@ -1,12 +1,57 @@
 <template>
-    <aside class="menu" v-show="isMenuVisible"></aside>
+    <aside class="menu" v-show="isMenuVisible">
+        <ul class="tree">
+            <tree v-for="(t, index) in treeData" :key="index" :item="t"></tree>
+        </ul>
+    </aside>
 </template>
 
 <script>
+import axios from "axios";
 import { mapState } from "vuex";
+import Tree from "./Tree.vue";
+
 export default {
     name: "MenuLayout",
-    computed: mapState(["isMenuVisible"]),
+    components: { Tree },
+    data() {
+        return {
+            treeData: [],
+        };
+    },
+    computed: {
+        ...mapState(["isMenuVisible"]),
+    },
+    mounted() {
+        this.getTreeData();
+    },
+    watch: {
+        "$page.props.flash.message"() {
+            this.getTreeData();
+        },
+    },
+    methods: {
+        getTreeData() {
+            const url = route("categories.get-tree");
+            axios.get(url).then((res) => {
+                console.log(this.mountTree(res.data.categories));
+                this.treeData = this.mountTree(res.data.categories);
+            });
+        },
+        mountTree(categories, tree) {
+            if (!tree) tree = categories.filter((c) => !c.parent_id);
+
+            tree = tree.map((parentNode) => {
+                const isChild = (node) => node.parent_id == parentNode.id;
+                parentNode.children = this.mountTree(
+                    categories,
+                    categories.filter(isChild)
+                );
+                return parentNode;
+            });
+            return tree;
+        },
+    },
 };
 </script>
 
@@ -18,5 +63,9 @@ export default {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
+}
+
+.tree {
+    padding: 1rem 0;
 }
 </style>

@@ -63,8 +63,10 @@ Route::middleware('auth')->group(function () {
         });
     });
 
+    Route::get('categories/get-tree', [CategoryController::class, 'index'])->name('categories.get-tree');
+
     Route::controller(ArticlesController::class)->group(function () {
-        Route::get('/categories/{category}/articles', 'getByCategories')->name('admin.article.get-by-categories');
-        Route::get('/articles/{article}', 'getByArticle')->name('admin.article.get-by-article');
+        Route::get('/categories/{category}/articles', 'getByCategories')->name('article.get-by-categories');
+        Route::get('/articles/{article}', 'getByArticle')->name('article.get-by-article');
     });
 });
