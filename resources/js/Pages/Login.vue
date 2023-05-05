@@ -68,11 +68,7 @@ export default {
             this.user = {};
         },
         signin() {
-            Inertia.post(route("authenticate"), this.user, {
-                onSuccess(res) {
-                    console.log(res);
-                },
-            });
+            Inertia.post(route("authenticate"), this.user);
         },
         signup() {
             let vm = this;

@@ -127,7 +127,6 @@ export default {
     },
     methods: {
         reset() {
-            console.log("entrou aqui");
             this.user = {};
             this.mode = "save";
         },

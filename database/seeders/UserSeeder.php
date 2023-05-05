@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
             'created_at' => '2023-04-16 21:10:07',
             'updated_at' => '2023-04-16 21:10:07',
             'remember_token' => 'xx',
-            'password' => '$2y$10$tmSCp8H/0wHSJ.0Ui62CHezk8yJYVigsPlAmE2pMN2Cg7f9iIeQui',
+            'password' => '$2y$10$tmSCp8H/0wHSJ.0Ui62CHezk8yJYVigsPlAmE2pMN2Cg7f9iIeQui', // password: 1234
             'admin' => 1,
         ]);
     }
