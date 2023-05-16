@@ -32,10 +32,12 @@
                 placeholder="Confirmação de Senha"
             />
 
-            <button v-if="showSignup" @click="signup">Registar</button>
-            <button v-else @click="signin">Entrar</button>
+            <v-btn v-if="showSignup" @click="signup" variant="elevated">
+                Registrar
+            </v-btn>
+            <v-btn v-else @click="signin" variant="elevated"> Entrar </v-btn>
 
-            <a href @click.prevent="showSignup = !showSignup">
+            <a class="login-register" @click.prevent="showSignup = !showSignup">
                 <span @click="reset" v-if="showSignup">
                     Já tem Cadastro? Acesse o Login!
                 </span>
@@ -56,7 +58,7 @@ export default {
     props: { errors: Object, flash: Object },
     data() {
         return {
-            showSignup: true,
+            showSignup: false,
             user: {},
             toast_options: {
                 duration: 5000,
@@ -72,7 +74,7 @@ export default {
         },
         signup() {
             let vm = this;
-            Inertia.post(route("web.user.store"), this.user, {
+            Inertia.post(route("user.store"), this.user, {
                 onSuccess(res) {
                     vm.reset();
                 },
@@ -113,6 +115,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    background: linear-gradient(to right, #1e469a, #49a7c1);
 }
 
 .auth-modal {
@@ -120,6 +123,7 @@ export default {
     width: 350px;
     padding: 35px;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
 
     display: flex;
     flex-direction: column;
@@ -159,5 +163,12 @@ export default {
         rgba(120, 120, 120, 0.75),
         rgba(120, 120, 120, 0)
     );
+}
+
+.login-register {
+    text-decoration: underline dotted;
+    margin-top: 8px;
+    cursor: pointer;
+    opacity: 0.7;
 }
 </style>
