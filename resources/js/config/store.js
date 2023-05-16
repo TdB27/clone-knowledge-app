@@ -3,11 +3,7 @@ import { createStore } from "vuex";
 export default createStore({
     state: {
         isMenuVisible: true,
-        user: {
-            name: "Thiago",
-            email: "thiago@gmail.com",
-            admin: true,
-        },
+        user: {},
     },
     mutations: {
         toggleMenu(state, isVisible) {
