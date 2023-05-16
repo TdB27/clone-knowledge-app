@@ -33,6 +33,41 @@ InertiaJs
 -   [x] -   Árvore de categorias (Menu)
 -   [x] -   Visualização da quantidade de usuarios, categorias e artigos cadastrados no sistema
 
+## Screenshot
+
+### Login
+
+<p>    
+    <img src="https://github.com/TdB27/clone-knowledge-app/blob/main/public/screenshot/login.png" width="375" alt="Login">
+    <img src="https://github.com/TdB27/clone-knowledge-app/blob/main/public/screenshot/register.png" width="375" alt="Register">
+</p>
+
+### Home
+
+<p>    
+    <img src="https://github.com/TdB27/clone-knowledge-app/blob/main/public/screenshot/home.png" width="375" alt="Home">
+</p>
+
+### Telas de Administrador
+
+<p>    
+    <img src="https://github.com/TdB27/clone-knowledge-app/blob/main/public/screenshot/admin-users.png" width="375" alt="Users">
+    <img src="https://github.com/TdB27/clone-knowledge-app/blob/main/public/screenshot/admin-categories.png" width="375" alt="Categories">
+    <img src="https://github.com/TdB27/clone-knowledge-app/blob/main/public/screenshot/admin-articles.png" width="375" alt="Articles">
+</p>
+
+### Lista de Artigos por Categoria
+
+<p>    
+    <img src="https://github.com/TdB27/clone-knowledge-app/blob/main/public/screenshot/list-articles-by-categories.png" width="375" alt="list of articles by categories">
+</p>
+
+### Tela do Artigo
+
+<p>    
+    <img src="https://github.com/TdB27/clone-knowledge-app/blob/main/public/screenshot/articles.png" width="375" alt="list of articles by categories">
+</p>
+
 ## Dependências
 
 ```
